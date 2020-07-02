@@ -1,10 +1,10 @@
-import currenciesIso from "./resources/currencies-iso-4217";
-import currencyCodes from "./resources/currencies-iso-4217-code";
-import monobankApiClient from "./monobankApiClient";
-import binanceApiClient from "./binanceApiClient";
-import cryptoCurrenciesRepository from "./CryptoCurrenciesRepository";
-import cryptoRatesRepository from "./CryptoRatesRepository";
-import fiatRatesRepository from "./FiatRatesRepository";
+import currenciesIso from "./src/resources/currencies-iso-4217";
+import currencyCodes from "./src/resources/currencies-iso-4217-code";
+import monobankApiClient from "./src/monobankApiClient";
+import binanceApiClient from "./src/binanceApiClient";
+import cryptoCurrenciesRepository from "./src/CryptoCurrenciesRepository";
+import cryptoRatesRepository from "./src/CryptoRatesRepository";
+import fiatRatesRepository from "./src/FiatRatesRepository";
 
 const uahNumCode = 980;
 const BTC = "BTC";
