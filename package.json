@@ -1,5 +1,5 @@
 {
-  "name": "@cross-rates/cross-rates-browser",
+  "name": "cross-rates-browser",
   "version": "0.0.1",
   "description": "Any currency (cryptocurrencies too) rates and transformation",
   "main": "index.js",
@@ -26,8 +26,5 @@
   "homepage": "https://github.com/cross-rates/cross-rates-browser#readme",
   "dependencies": {
     "axios": "^0.19.2"
-  },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
   }
 }
