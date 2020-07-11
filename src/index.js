@@ -1,10 +1,10 @@
-import currenciesIso from "./src/resources/currencies-iso-4217";
-import currencyCodes from "./src/resources/currencies-iso-4217-code";
-import monobankApiClient from "./src/monobankApiClient";
-import binanceApiClient from "./src/binanceApiClient";
-import cryptoCurrenciesRepository from "./src/CryptoCurrenciesRepository";
-import cryptoRatesRepository from "./src/CryptoRatesRepository";
-import fiatRatesRepository from "./src/FiatRatesRepository";
+import currenciesIso from "./resources/currencies-iso-4217.json";
+import currencyCodes from "./resources/currencies-iso-4217-code.json";
+import monobankApiClient from "./components/monobankApiClient";
+import binanceApiClient from "./components/binanceApiClient";
+import cryptoCurrenciesRepository from "./components/CryptoCurrenciesRepository";
+import cryptoRatesRepository from "./components/CryptoRatesRepository";
+import fiatRatesRepository from "./components/FiatRatesRepository";
 
 const uahNumCode = 980;
 const BTC = "BTC";
@@ -207,7 +207,8 @@ const rates = {
         return typeToTransformer[pairType](amount, currency, resultCurrency)
     },
     isReady() {
-        return fiatRatesRepository.getLatest().length && cryptoRatesRepository.getLatest().length
+        return !!fiatRatesRepository.getLatest().length
+            && !!cryptoRatesRepository.getLatest().length
     },
     getCryptoCurrencies() {
         return getCryptoCurrencies()
@@ -299,12 +300,12 @@ function fetchLatestRates() {
                         console.warn("Fetching latest cryptoRates failed", response);
                         throw response
                     }
-                })
-                .catch(e => {
+                },
+                e => {
                     console.warn(e);
                     console.warn(`Will re-fetch cryptoRates after timeout: ${currentCryptoTimeout / milli}s`);
                     setTimeout(fetchLatestCryptoCurrenciesRates, currentCryptoTimeout);
-                })
+                });
         },
     ].forEach(task => {
         try {

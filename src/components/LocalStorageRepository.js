@@ -12,7 +12,7 @@ export default class LocalStorageRepository {
     }
 
     getLatest() {
-        return JSON.parse(localStorage.getItem(this.name))
+        return JSON.parse(localStorage.getItem(this.name) || "null")
             || (this.nullObjectSupplier
                 ? this.nullObjectSupplier()
                 : this.nullObject);
