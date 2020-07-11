@@ -1,10 +1,10 @@
-import currenciesIso from "./resources/currencies-iso-4217.json";
-import currencyCodes from "./resources/currencies-iso-4217-code.json";
-import monobankApiClient from "./components/monobankApiClient";
-import binanceApiClient from "./components/binanceApiClient";
-import cryptoCurrenciesRepository from "./components/CryptoCurrenciesRepository";
-import cryptoRatesRepository from "./components/CryptoRatesRepository";
-import fiatRatesRepository from "./components/FiatRatesRepository";
+const currenciesIso = require("./resources/currencies-iso-4217.json");
+const currencyCodes = require("./resources/currencies-iso-4217-code.json");
+const monobankApiClient = require("./components/monobankApiClient");
+const binanceApiClient = require("./components/binanceApiClient");
+const cryptoCurrenciesRepository = require("./components/CryptoCurrenciesRepository");
+const cryptoRatesRepository = require("./components/CryptoRatesRepository");
+const fiatRatesRepository = require("./components/FiatRatesRepository");
 
 const uahNumCode = 980;
 const BTC = "BTC";
