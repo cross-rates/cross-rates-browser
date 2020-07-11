@@ -215,6 +215,9 @@ const rates = {
     getFiatCurrencies() {
         return getFiatCurrencies()
     },
+    refreshRates() {
+        fetchLatestRates()
+    },
 };
 
 export default rates;
@@ -228,84 +231,89 @@ let currentCryptoTimeout = 30 * milli;
 let savedRates = null;
 let savedCryptoRates = null;
 
-[
-    function fetchLatestRates() {
-        monobankApiClient.getRates(
-            fiatRates => {
-                if (fiatRates
-                    && !fiatRates.errorDescription
-                    && fiatRates.length
-                ) {
-                    if (fiatRates !== savedRates) {
-                        fiatRatesRepository.save(fiatRates);
-                        savedRates = fiatRates;
+function fetchLatestRates() {
+    [
+        function fetchLatestFiatRates() {
+            monobankApiClient.getRates(
+                fiatRates => {
+                    if (fiatRates
+                        && !fiatRates.errorDescription
+                        && fiatRates.length
+                    ) {
+                        if (fiatRates !== savedRates) {
+                            fiatRatesRepository.save(fiatRates);
+                            savedRates = fiatRates;
+                        }
+                    } else {
+                        console.warn("Fetching latest rates failed", fiatRates);
+                        throw fiatRates
                     }
-                } else {
-                    console.warn("Fetching latest rates failed", fiatRates);
-                    throw fiatRates
-                }
-            },
-            e => {
-                console.warn(e);
-                console.log(`Will re-fetch after timeout: ${currentTimeout / milli}s`);
-                setTimeout(fetchLatestRates, currentTimeout);
-                let newTimeoutValue = currentTimeout - timeoutStep;
-                if (newTimeoutValue < endTimeout) {
-                    newTimeoutValue = endTimeout
-                }
-                currentTimeout = newTimeoutValue;
-            }
-        );
-    },
-    function fetchCryptoCurrencies() {
-        binanceApiClient.fetchCryptoCurrencies(
-            response => {
-                let symbols = response.data.symbols;
-                if (symbols) {
-                    cryptoCurrenciesRepository.save(Object.keys(symbols
-                        .sort((a, b) => compareStrings(a.symbol, b.symbol))
-                        .reduce((result, symbol) => {
-                            result[symbol.baseAsset] = true;
-                            result[symbol.quoteAsset] = true;
-                            return result
-                        }, {})));
-                } else {
-                    console.warn("Fetching latest binance symbols failed", response);
-                    throw response
-                }
-            },
-            e => {
-                console.warn(e);
-                const timeout = 10_000;
-                console.warn(`Will re-fetch cryptoRates after timeout: ${timeout / milli}s`);
-                setTimeout(fetchCryptoCurrencies, timeout);
-            }
-        )
-    },
-    function fetchLatestCryptoCurrenciesRates() {
-        binanceApiClient.fetchLatestCryptoCurrenciesRates(
-            response => {
-                let cryptoRates = response.data;
-                if (cryptoRates) {
-                    if (cryptoRates !== savedCryptoRates) {
-                        cryptoRatesRepository.save(cryptoRates);
-                        savedCryptoRates = cryptoRates;
+                },
+                e => {
+                    console.warn(e);
+                    console.log(`Will re-fetch after timeout: ${currentTimeout / milli}s`);
+                    setTimeout(fetchLatestFiatRates, currentTimeout);
+                    let newTimeoutValue = currentTimeout - timeoutStep;
+                    if (newTimeoutValue < endTimeout) {
+                        newTimeoutValue = endTimeout
                     }
-                } else {
-                    console.warn("Fetching latest cryptoRates failed", response);
-                    throw response
+                    currentTimeout = newTimeoutValue;
                 }
-            })
-            .catch(e => {
-                console.warn(e);
-                console.warn(`Will re-fetch cryptoRates after timeout: ${currentCryptoTimeout / milli}s`);
-                setTimeout(fetchLatestCryptoCurrenciesRates, currentCryptoTimeout);
-            })
-    },
-].forEach(task => {
-    try {
-        task()
-    } catch (e) {
-        console.error(e);
-    }
-});
+            );
+        },
+        function fetchCryptoCurrencies() {
+            binanceApiClient.fetchCryptoCurrencies(
+                response => {
+                    let symbols = response.data.symbols;
+                    if (symbols) {
+                        cryptoCurrenciesRepository.save(Object.keys(symbols
+                            .sort((a, b) => compareStrings(a.symbol, b.symbol))
+                            .reduce((result, symbol) => {
+                                result[symbol.baseAsset] = true;
+                                result[symbol.quoteAsset] = true;
+                                return result
+                            }, {})));
+                    } else {
+                        console.warn("Fetching latest binance symbols failed", response);
+                        throw response
+                    }
+                },
+                e => {
+                    console.warn(e);
+                    const timeout = 10_000;
+                    console.warn(`Will re-fetch cryptoRates after timeout: ${timeout / milli}s`);
+                    setTimeout(fetchCryptoCurrencies, timeout);
+                }
+            )
+        },
+        function fetchLatestCryptoCurrenciesRates() {
+            binanceApiClient.fetchLatestCryptoCurrenciesRates(
+                response => {
+                    let cryptoRates = response.data;
+                    if (cryptoRates) {
+                        if (cryptoRates !== savedCryptoRates) {
+                            cryptoRatesRepository.save(cryptoRates);
+                            savedCryptoRates = cryptoRates;
+                        }
+                    } else {
+                        console.warn("Fetching latest cryptoRates failed", response);
+                        throw response
+                    }
+                })
+                .catch(e => {
+                    console.warn(e);
+                    console.warn(`Will re-fetch cryptoRates after timeout: ${currentCryptoTimeout / milli}s`);
+                    setTimeout(fetchLatestCryptoCurrenciesRates, currentCryptoTimeout);
+                })
+        },
+    ].forEach(task => {
+        try {
+            task()
+        } catch (e) {
+            console.error(e);
+        }
+    });
+}
+
+fetchLatestRates();
+
