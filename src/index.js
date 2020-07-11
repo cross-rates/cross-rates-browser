@@ -221,7 +221,6 @@ const rates = {
     },
 };
 
-export default rates;
 module.exports = rates;
 
 const milli = 1000;
