@@ -280,7 +280,7 @@ function fetchLatestRates() {
                 },
                 e => {
                     console.warn(e);
-                    const timeout = 10_000;
+                    const timeout = 10000;
                     console.warn(`Will re-fetch cryptoRates after timeout: ${timeout / milli}s`);
                     setTimeout(fetchCryptoCurrencies, timeout);
                 }
