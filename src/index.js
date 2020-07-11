@@ -222,6 +222,7 @@ const rates = {
 };
 
 export default rates;
+module.exports = rates;
 
 const milli = 1000;
 const startTimeout = 20 * milli;
