@@ -27,8 +27,7 @@
   },
   "homepage": "https://github.com/cross-rates/cross-rates-browser#readme",
   "dependencies": {
-    "axios": "^0.19.2",
-    "webpack-merge": "^5.0.9"
+    "axios": "^0.19.2"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
@@ -42,6 +41,7 @@
     "clean-webpack-plugin": "^3.0.0",
     "jest": "^26.1.0",
     "webpack": "^4.43.0",
-    "webpack-cli": "^3.3.12"
+    "webpack-cli": "^3.3.12",
+    "webpack-merge": "^5.0.9"
   }
 }
