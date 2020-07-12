@@ -1,1 +1,4 @@
-module.exports = require("./src/index")
+import {rates} from "./src/index";
+
+console.log("rates", rates);
+export default rates;

@@ -1,6 +1,6 @@
 const localStorageNamePrefix = '__cross-rates__';
 
-export default class LocalStorageRepository {
+export class LocalStorageRepository {
 
     name;
     nullObject;

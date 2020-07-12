@@ -2,7 +2,7 @@ import axios from "axios";
 
 const baseUrl = "https://api.monobank.ua";
 
-export default {
+export const monobankApiClient = {
     getRates(ratesConsumer, onError) {
         axios.get(baseUrl + "/bank/currency")
             .then(response => {

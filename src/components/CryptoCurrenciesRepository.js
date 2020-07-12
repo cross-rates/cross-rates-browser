@@ -1,8 +1,6 @@
-import LocalStorageRepository from "./LocalStorageRepository";
+import {LocalStorageRepository} from "./LocalStorageRepository";
 
-const cryptoCurrenciesRepository = LocalStorageRepository.builder()
+export const cryptoCurrenciesRepository = LocalStorageRepository.builder()
     .name('crypto-currencies')
     .nullObject([])
     .build();
-
-export default cryptoCurrenciesRepository

@@ -12,7 +12,7 @@ function extractResponse(onSuccess) {
     };
 }
 
-const binanceApiClient = {
+export const binanceApiClient = {
     fetchCryptoCurrencies(onSuccess, onError) {
         axios.get(binanceApiUrl + "/api/v3/exchangeInfo")
             .then(extractResponse(onSuccess))
@@ -24,5 +24,3 @@ const binanceApiClient = {
             .catch(onError)
     }
 };
-
-export default binanceApiClient

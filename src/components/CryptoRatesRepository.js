@@ -1,8 +1,6 @@
-import LocalStorageRepository from "./LocalStorageRepository";
+import {LocalStorageRepository} from "./LocalStorageRepository";
 
-const cryptoRatesRepository = LocalStorageRepository.builder()
+export const cryptoRatesRepository = LocalStorageRepository.builder()
     .name('crypto-rates')
     .nullObject([])
     .build();
-
-export default cryptoRatesRepository

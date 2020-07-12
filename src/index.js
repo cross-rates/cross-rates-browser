@@ -1,10 +1,10 @@
-const currenciesIso = require("./resources/currencies-iso-4217.json");
-const currencyCodes = require("./resources/currencies-iso-4217-code.json");
-const monobankApiClient = require("./components/monobankApiClient");
-const binanceApiClient = require("./components/binanceApiClient");
-const cryptoCurrenciesRepository = require("./components/CryptoCurrenciesRepository");
-const cryptoRatesRepository = require("./components/CryptoRatesRepository");
-const fiatRatesRepository = require("./components/FiatRatesRepository");
+import * as currenciesIso from "./resources/currencies-iso-4217.json";
+import * as currencyCodes from "./resources/currencies-iso-4217-code.json";
+import {monobankApiClient} from "./components/monobankApiClient";
+import {binanceApiClient} from "./components/binanceApiClient";
+import {cryptoCurrenciesRepository} from "./components/CryptoCurrenciesRepository";
+import {cryptoRatesRepository} from "./components/CryptoRatesRepository";
+import {fiatRatesRepository} from "./components/FiatRatesRepository";
 
 const uahNumCode = 980;
 const BTC = "BTC";
@@ -201,7 +201,7 @@ function compareStrings(a, b) {
     return (a < b) ? -1 : (a > b ? 1 : 0)
 }
 
-const rates = {
+export const rates = {
     transform(amount, currency, resultCurrency) {
         const pairType = getCurrencyType(currency) + getCurrencyType(resultCurrency);
         return typeToTransformer[pairType](amount, currency, resultCurrency)
@@ -220,8 +220,6 @@ const rates = {
         fetchLatestRates()
     },
 };
-
-module.exports = rates;
 
 const milli = 1000;
 const startTimeout = 20 * milli;

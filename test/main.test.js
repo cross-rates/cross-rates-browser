@@ -1,4 +1,4 @@
-import rates from "../src";
+import rates from "cross-rates-browser";
 import {expect} from "@jest/globals";
 
 class LocalStorageMock {
@@ -26,5 +26,6 @@ class LocalStorageMock {
 Object.defineProperty(window, 'localStorage', {value: new LocalStorageMock()});
 
 test('is not ready from start', () => {
+    console.log(rates);
     expect(rates.isReady()).toBe(false);
 });

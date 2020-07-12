@@ -5,7 +5,9 @@ module.exports = {
     entry: './index.js',
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: 'main.js'
+        filename: 'main.js',
+        library: 'rates',
+        libraryTarget: 'umd',
     },
     module: {
         rules: [
@@ -21,6 +23,4 @@ module.exports = {
             }
         ]
     },
-    plugins: [],
-    target: 'web'
 };
