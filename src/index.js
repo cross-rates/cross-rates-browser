@@ -210,6 +210,10 @@ export const rates = {
         return !!fiatRatesRepository.getLatest().length
             && !!cryptoRatesRepository.getLatest().length
     },
+    subscribeOnChange(consumer) {
+        fiatRatesRepository.subscribeOnChange(consumer);
+        cryptoCurrenciesRepository.subscribeOnChange(consumer);
+    },
     getCryptoCurrencies() {
         return getCryptoCurrencies()
     },
