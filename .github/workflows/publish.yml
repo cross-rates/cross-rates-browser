@@ -19,8 +19,8 @@ jobs:
       - run: npm link
       - run: npm link cross-rates-browser
       - run: npm run test
-      - run: npm unlink
       - run: npm unlink cross-rates-browser
+      - run: npm unlink
       - run: git config --global user.email "$GITHUB_ACTOR@users.noreply.github.com" && git config --global user.name "$GITHUB_ACTOR"
       - run: npm version patch --force
       - run: git push --tags && git push
