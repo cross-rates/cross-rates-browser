@@ -14,13 +14,13 @@ jobs:
         with:
           node-version: '12.x'
           registry-url: 'https://registry.npmjs.org'
+      - run: npm ci
+      - run: npm run build
       - run: npm link
       - run: npm link cross-rates-browser
-      - run: npm ci
       - run: npm run test
       - run: npm unlink
       - run: npm unlink cross-rates-browser
-      - run: npm run build
       - run: git config --global user.email "$GITHUB_ACTOR@users.noreply.github.com" && git config --global user.name "$GITHUB_ACTOR"
       - run: npm version patch --force
       - run: git push --tags && git push
