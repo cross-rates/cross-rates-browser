@@ -1,5 +1,5 @@
-import * as currenciesIso from "./resources/currencies-iso-4217.json";
-import * as currencyCodes from "./resources/currencies-iso-4217-code.json";
+import currenciesIso from "./resources/currencies-iso-4217.json";
+import currencyCodes from "./resources/currencies-iso-4217-code.json";
 import {monobankApiClient} from "./components/monobankApiClient";
 import {binanceApiClient} from "./components/binanceApiClient";
 import {cryptoCurrenciesRepository} from "./components/CryptoCurrenciesRepository";
@@ -202,6 +202,9 @@ function compareStrings(a, b) {
 }
 
 export const rates = {
+    getFiatCurrenciesData() {
+        return currenciesIso;
+    },
     transform(amount, currency, resultCurrency) {
         const pairType = getCurrencyType(currency) + getCurrencyType(resultCurrency);
         return typeToTransformer[pairType](amount, currency, resultCurrency)

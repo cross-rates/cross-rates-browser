@@ -29,3 +29,8 @@ test('is not ready from start', () => {
     console.log(rates);
     expect(rates.isReady()).toBe(false);
 });
+
+test('can load data from json', () => {
+    console.log(rates.getFiatCurrenciesData());
+    expect(rates.getFiatCurrenciesData().UAH).toBeDefined();
+});
