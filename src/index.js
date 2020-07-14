@@ -210,8 +210,14 @@ export const rates = {
         return !!fiatRatesRepository.getLatest().length
             && !!cryptoRatesRepository.getLatest().length
     },
-    subscribeOnChange(consumer) {
+    triggerOnChange(callMe) {
+        fiatRatesRepository.subscribeOnChange(() => callMe());
+        cryptoCurrenciesRepository.subscribeOnChange(() => callMe());
+    },
+    onFiatRatesUpdate(consumer) {
         fiatRatesRepository.subscribeOnChange(consumer);
+    },
+    onCryptoRatesUpdate(consumer) {
         cryptoCurrenciesRepository.subscribeOnChange(consumer);
     },
     getCryptoCurrencies() {
