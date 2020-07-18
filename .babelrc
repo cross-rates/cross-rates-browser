@@ -5,7 +5,7 @@
       {
         "targets": {
           "node": "12.1.1",
-          "esmodules": false
+          "esmodules": true
         }
       }
     ]
